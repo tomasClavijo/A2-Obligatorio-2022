@@ -24,16 +24,16 @@ Resolver en orden espacial auxiliar (sin contar el array de números): O(1)
 ### Ejemplos de entrada y salida
 
 #### Entrada
-5
-10
-4
-7
-42
-3
+5  
+10  
+4  
+7  
+42  
+3  
 
 #### Salida
-3
-4
-7
-10
-42
+3  
+4  
+7  
+10  
+42  
