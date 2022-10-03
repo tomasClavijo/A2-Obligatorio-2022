@@ -8,7 +8,7 @@ Dado un grafo dirigido, retornar un listado con sus vértices ordenados decrecie
 
 ### Input
 
-Formato de Grafos
+[Formato de Grafos](../FormatoDeGrafos.md)
 
 ### Salida
 
