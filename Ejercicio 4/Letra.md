@@ -8,7 +8,7 @@ Dado un grafo no dirigido, indicar si el mismo es triconexo. Un grafo es tricone
 
 ### Input
 
-Formato de Grafos
+[Formato de Grafos](../FormatoDeGrafos.md)
 
 ### Salida
 

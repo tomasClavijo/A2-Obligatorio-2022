@@ -8,7 +8,7 @@ Dado un grafo no dirigido y disperso, se desea obtener un árbol de cubrimiento 
 
 ### Input
 
-Inicialmente, respeta el Formato de Grafos. Luego, posee una línea con un entero indicando la cantidad de vértices a ignorar, seguido de dichos vértices.
+Inicialmente, respeta el [Formato de Grafos](../FormatoDeGrafos.md). Luego, posee una línea con un entero indicando la cantidad de vértices a ignorar, seguido de dichos vértices.
 
 ### Salida
 
