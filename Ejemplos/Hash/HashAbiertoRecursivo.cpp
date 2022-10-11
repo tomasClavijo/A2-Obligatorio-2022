@@ -11,7 +11,7 @@ class HashTable{
         virtual string get(string key) = 0;
         virtual void remove (string key) = 0;
 
-}
+};
 
 struct HashTableNode {
     string key;
@@ -76,7 +76,7 @@ class HashTableImp : public HashTable {
     public:
         // Constructor 
         HashTableImp(int _size){
-            size = _size
+            size = _size;
             arr = new HashTableNode*[size];
             for (int i = 0; i < size; i++){
                 arr[i] = NULL; 
@@ -92,7 +92,7 @@ class HashTableImp : public HashTable {
         bool exist(string key){
             int hashValue = this->hash(key);
             int index = abs(hashValue) % size;
-            return existRec(key, arr[index]);
+            return existeRec(key, arr[index]);
         }
         string get(string key){
             assert(exist(key));
