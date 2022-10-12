@@ -40,13 +40,31 @@ class GrafoMA: public Grafo{
             }
         }
         void aniadirArista(int origen, int destino, int peso = 1){
-
+            ponderaciones[origen][destino] = peso;
+            existeArista[origen][destino] = true; 
+            gradoDeEntrada[destino]++;
+            A++;
+            // En caso de no ser dirigido, debemos tener una matriz simetrica (por diagonal principal).
+            if(!esDirigido){
+                ponderaciones[destino][origen] = peso;
+                existeArista[destino][origen] = true;
+                gradoDeEntrada[origen]++;
+            }
         }
         int getV(){
             return V;
         }
         int getA(){
             return A;
+        }
+        NodoLista<Arista> *getAdyacentes(int origen){
+            NodoLista<Arista> * ret = NULL;
+            for (int j=1; j<= V; j++){
+                if (existeArista[origen][j]){
+                    Arista a(origen, j, ponderaciones[origen][j]);
+                    ret = new NodoLista<Arista>(a, ret);
+                }
+            }
         }
 };
 

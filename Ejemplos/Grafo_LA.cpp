@@ -42,12 +42,26 @@ class GrafoLA : public Grafo{
             }
         }
         int getV(){
-
+            return V;
         }
         int getA(){
-
+            return A;
         }
         NodoLista<Arista>* getAdyacentes(int origen){
+            // Opcion 1: O(1)pc
+            return listaAdy[origen];
+            // Opcion 2: O(V)pc
+            // Devolver una copia 
+            /* 
+                NodoLista<Arista>* ret = NULL;
+                NodoLista<Arista>* aux = listaAdy[origen];
+                while(aux!= NULL){
+                    ret = new NodoLista(aux->el, ret);
+                    aux = aux->sig;
+                }
+                return ret;
+            */
+
 
         }
 };
