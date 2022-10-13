@@ -30,7 +30,7 @@ void ordenTopologico(Grafo* g){
     int verticesProcesados = 0;
     while(!listos->esVacia()){
         int vertice = listos->pop();
-        verticesProcesados++
+        verticesProcesados++;
         cout << vertice << endl;
         NodoLista<Arista>* ady = g->getAdyacentes(vertice);
         while (ady != NULL){

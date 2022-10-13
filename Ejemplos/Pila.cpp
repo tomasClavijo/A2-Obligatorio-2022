@@ -21,6 +21,6 @@ class Pila{
         bool esVacia(){
             return tope == NULL; 
         }
-}
+};
 
 #endif
