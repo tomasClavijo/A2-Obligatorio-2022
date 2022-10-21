@@ -1,107 +1,117 @@
+#include <cassert>
+#include <string>
 #include <iostream>
-
+#include <limits>
 using namespace std;
 
-
-
-class Heap{
-
-    public:
-
-        Heap(int cantAproxElem){
-            vec = new int[cantAproxElem];
-            for (int i = 0; i < cantAproxElem; i++){
-                vec[i] = 0;
-            }
-            cantElem = 0;
-        }
-
-        ~Heap(){
-            delete[] vec;
-        }
-
-        void push(int e){
-            int pos = cantElem+1;
-            vec[pos] = e;
-            while(padre(vec[pos]) > e){
-                flotar(vec[pos]);
-                pos = padre(vec[pos]);
-            }
-            cantElem ++;
-        }
-
-        int pop(){
-            
-        }
-
-        int top(){
-            return vec[0];
-        }
-
-        bool estaVacio(){
-            return vec[0] == 0;
-        }
-
-
-
+class MinHeap{
     private:
+        int* arr;
+        int proximoLibre;
+        int largo;
 
-        int* vec;
-        
-        int cantElem;
-        
-        int hijoIzq(int n){
-            return 2*n+1;
+        int posPadre(int pos){
+            return pos / 2;
         }
 
-        int hijoDer(int n){
-            return 2*n+2;
+        int posHijoIzq(int pos){
+            return pos * 2;
         }
 
-        int padre(int n){
-            return (n-1)/2;
+        int posHijoDer(int pos){
+            return pos * 2 + 1;
         }
 
-        void flotar(int n){
-
+        bool tengoHijoIzq(int pos){
+            return proximoLibre > posHijoIzq(pos);
         }
 
-        void hundir(int n){
-
+        bool tengoHijoDer(int pos){
+            return proximoLibre > posHijoDer(pos);
         }
 
-        void swap(int a, int b){
-            
+        void intercambiar(int pos1, int pos2){
+            int aux = arr[pos1];
+            arr[pos1] = arr[pos2];
+            arr[pos2] = aux;
+        }
+
+        void flotar(int pos){
+            if (pos == 1){
+                return;
+            } else {
+                int posPadre = this->posPadre(pos);
+                int valorPadre = arr[posPadre];
+                int valorActual = arr[pos];
+                if (valorPadre > valorActual){
+                    intercambiar(posPadre, pos);
+                    flotar(posPadre);
+                }
+            }
+        }
+
+        void hundir(int pos){
+           if (tengoHijoIzq(pos)){
+            int posHijoMenor = posHijoIzq(pos);
+            if (tengoHijoDer(pos) && (arr[posHijoDer(pos)] < arr [posHijoIzq(pos)])){
+                posHijoMenor = posHijoDer(pos);
+            }
+            if(arr[pos] > arr[posHijoMenor]){
+                intercambiar (pos, posHijoMenor);
+                hundir (posHijoMenor);
+            }
+           }
+        }
+    
+    public:
+        MinHeap(int capacidad){
+            largo = capacidad + 1;
+            proximoLibre = 1;
+            arr = new int[largo]();
+        }
+        ~MinHeap(){
+            delete [] arr;
+        }
+        void insertar (int elemento){
+            assert(!estaLleno());
+            arr[proximoLibre] = elemento;
+            proximoLibre++;
+            flotar(proximoLibre - 1);
+        }
+        void eliminarMin(){
+            assert(!esVacio());
+            arr[1] = arr[proximoLibre - 1];
+            proximoLibre--;
+            hundir(1);
+        }
+        int getMin(){
+            assert(!esVacio());
+            return arr[1];
+        }
+        bool esVacio(){
+            return proximoLibre == 1;
+        }
+        bool estaLleno(){
+            return proximoLibre >= largo; 
+        }
+        int cantidadDeElementos(){
+            return proximoLibre - 1;
         }
 
 };
 
-
-
 int main(){
-
-    Heap *myHeap = new Heap(50);
-
-    for (int i = 0; i < 10; myHeap->push(i++));
-
-    myHeap->push(-1);
-
-    myHeap->push(-20);
-
-    myHeap->push(-40);
-
-
-
-    while(!myHeap->estaVacio()){
-
-        cout << myHeap->pop() << endl;
-
+    int cantidadNumerosEnteros; // N cantidad de elementos
+    cin >> cantidadNumerosEnteros;
+    int n; // Variable para cada numero a insertar. 
+    MinHeap* heap = new MinHeap(cantidadNumerosEnteros);
+    for (int i = 0; i < cantidadNumerosEnteros; i++){
+        cin >> n;
+        heap->insertar(n);
     }
-
-
-
-    delete myHeap;
-
-    return 0;
-
+    for (int i = 0; i < cantidadNumerosEnteros; i++){
+        cout << heap->getMin() <<endl;
+        heap->eliminarMin();
+    }
+    delete heap;
 }
