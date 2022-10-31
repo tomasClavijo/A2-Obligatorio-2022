@@ -2,9 +2,6 @@
 #include <string>
 #include <iostream>
 #include <limits>
-
-#include <cstdlib>
-#include <fstream>
 using namespace std;
 
 struct nodo {
@@ -123,12 +120,6 @@ class MaxHeap{
 };
 
 int main (){
-      //// IMPORTANTE! BORRAR O COMENTAR LAS SIGUIENTES LINEAS  EN TODOS LOS EJERCICIOS DEL OBLIGATORIO. NO PUEDEN ESTAR EN NINGUNA ENTREGA!
-  ifstream myFile("Pruebas\\10.in.txt");
-  cin.rdbuf(myFile.rdbuf());
-  //Si desean tirar la salida a un archivo, usen las siguientes líneas (si no, sáquenlas):
-  ofstream myFile2("Pruebas\\10.eout.txt");
-  cout.rdbuf(myFile2.rdbuf());
     int cantidadVertices; 
     cin >> cantidadVertices;
     int cantidadAristas;
