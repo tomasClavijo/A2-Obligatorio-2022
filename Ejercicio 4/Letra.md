@@ -23,12 +23,12 @@ Resolver en orden temporal: O(V2 * (V + E)) peor caso, siendo E la cantidad de a
 #### Entrada
 4  
 6  
-1 2 10  
-1 3 20  
-1 4 30  
-2 3 40  
-2 4 50  
-3 4 60  
+1 2   
+1 3   
+1 4   
+2 3   
+2 4   
+3 4   
 
 #### Salida
 1  

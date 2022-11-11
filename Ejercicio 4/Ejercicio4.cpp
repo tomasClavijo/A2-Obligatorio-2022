@@ -44,7 +44,7 @@ class Grafo{
         void DFS(int origen, bool* visitado){
             visitado[origen] = true;
 
-            for (int i = 0; i < largoVec; i++){
+            for (int i = 1; i < largoVec; i++){
                 if(!visitado[i] && matAdy[origen][i]->existe)
                     DFS(i,visitado);
             }
@@ -52,46 +52,52 @@ class Grafo{
 
         //TODO: Hacer que sea TRIconexo y no solo conexo
 
-        bool esConexo(){
+        bool esTriconexo(int ignorar1, int ignorar2){
             bool* visitado = new bool[largoVec];
+
+            visitado[ignorar1] = true;
+            visitado[ignorar2] = true;
 
             DFS(1, visitado);
 
             int cont = 0;
-            for (int i = 0; i < largoVec; i++)
+            for (int i = 1; i < largoVec; i++)
                 if(visitado[i])
                     cont++;
 
-            if(cont == cant){
-                return true;
-            }else{
-                return false;
-            }
+            return cont == cant;
         }
 
 };
 
 int main(){
+    int cantV;
+    cin >> cantV;
 
-    Grafo *g = new Grafo(5);
+    Grafo *g = new Grafo(cantV);
 
-    g->insertarArista(0,1);
-    g->insertarArista(1,3);
-    g->insertarArista(3,2);
+    int cantA;
+    cin >> cantA;
 
-    if(g->esConexo()){
-        cout << "1" << endl;
-    }else{
-        cout << "0" << endl;
+    for(int i = 0; i < cantA; i++){
+        int v1;
+        cin >> v1;
+
+        int v2;
+        cin >> v2;
+
+        g->insertarArista(v1,v2);
     }
 
-    g->insertarArista(3,4);
+    for(int i = 1; i < cantV+1; i++)
+        for(int j = 1; j < cantV+1; j++)
+            if(!g->esTriconexo(i,j)){
+                cout << 0 << endl;
+                delete g;
+                return 0;
+            }
 
-    if(g->esConexo()){
-        cout << "1" << endl;
-    }else{
-        cout << "0" << endl;
-    }
+    cout << 1 << endl;
 
     delete g;
     return 0;
