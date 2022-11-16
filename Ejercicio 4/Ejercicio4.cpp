@@ -50,8 +50,6 @@ class Grafo{
             }
         }
 
-        //TODO: Hacer que sea TRIconexo y no solo conexo
-
         bool esTriconexo(int ignorar1, int ignorar2){
             bool* visitado = new bool[largoVec];
 
