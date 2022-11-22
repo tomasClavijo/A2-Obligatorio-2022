@@ -5,6 +5,39 @@
 #include <limits>
 using namespace std;
 
+class MFSet{
+    int *parent, n;
+
+    public:
+    MFSet(int n){
+        parent = new int[n];
+        this->n = n;
+        makeSet();
+    }
+
+    void makeSet(){
+        for (int i = 0; i < n; i++){
+            parent[i] = i;
+        }
+    }
+
+    int find(int x){
+        if(parent[x] != -1){
+            return find(parent[x]);
+        }
+        return x;
+    }
+
+    void merge(int x, int y){
+        int xset = find(x);
+        int yset = find(y);
+
+        if(xset != yset){
+            parent[yset] = xset;
+        }
+    }
+};
+
 class Arista {
     private:
         int origen;
@@ -208,8 +241,43 @@ class GrafoLA {
         }
         Arista** Kruskall(){
             resultado = new Arista*[V-1];
-            //if (!verticesIgnorados[a->origen] && !verticesIgnorados[a->destino]){
-                // Componentes conexas. 
-            //}
+            MFSet* m = new MFSet(V + 1);
+            while(!heap->esVacio()){
+                Arista* a = heap->getMin();
+                heap->eliminarMin();
+                if (!verticesIgnorados[a->getOrigen()] && !verticesIgnorados[a->getDestino()]){
+                    if (m->find(a->getOrigen()) != m->find(a->getDestino())){
+                        cout << a->getOrigen() << " " << a->getDestino() << endl;
+                        m->merge(a->getOrigen(), a->getDestino());
+                    }
+                }
+                delete a;
+            }
         }
+};
+
+int main (){
+    int cantVertices;
+    cin >> cantVertices;
+    int cantAristas;
+    cin >> cantAristas;
+    GrafoLA *g = new GrafoLA(cantVertices);
+    int origen;
+    int destino;
+    int peso;
+    for (int i = 0; i < cantAristas; i++){
+        cin >> origen;
+        cin >> destino;
+        cin >> peso;
+        g->aniadirArista(origen, destino, peso);
+    }
+    int verticesAIgnorar;
+    cin >> verticesAIgnorar;
+    int vIgnorado;
+    for (int i = 0; i < verticesAIgnorar; i++){
+        cin >> vIgnorado;
+        g->ignorarXVertice(vIgnorado);
+    }
+    g->Kruskall();
+    g->~GrafoLA();
 };
