@@ -12,3 +12,7 @@ int ** initMatriz(int cantidad, int cota)
     }
     return m;
 }
+
+int main(){
+    return 0;
+}
