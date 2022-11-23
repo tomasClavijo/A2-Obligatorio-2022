@@ -38,11 +38,11 @@ bool ** resolucion(int cantidad, int cota, int* objetos)
             }
         }
     }
+    return tab;
 }
 
 int main()
 {
-    // Cargo todos los objetos del conjunto
     int N;
     cin >> N;
     int* objetos = new int [N];
@@ -52,11 +52,9 @@ int main()
         objetos[i] = elemento;
     }
 
-    // Cargo la cota
     int cota;
     cin >> cota;
 
-    // Cargo las pruebas
     int P;
     cin >> P;
     int* pruebas = new int [P];
