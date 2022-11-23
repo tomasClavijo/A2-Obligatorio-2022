@@ -4,19 +4,39 @@
 #include <limits>
 using namespace std;
 
-int ** initMatriz(int cantidad, int cota)
+bool ** initMatriz(int cantidad, int cota)
 {
     int **m = new int* [cantidad + 1]();
     for (int i = 0; i <= cantidad; i++){
         m[i] = new int[cota+1]();
     }
     return m;
-}
+};
 
-int ** resolucion(int cantidad, int cota){
-    int** tab = initMatriz(cantidad, cota);
-    for(int i = 1; i <= cantidad; i++){
-        
+bool ** resolucion(int cantidad, int cota, int* objetos, int* pruebas)
+{
+    bool** tab = initMatriz(cantidad, cota);
+    for (int i = 0; i <= cantidad; i++){
+        tab[i][0] = false;
+    }
+    for(int j = 1; j <= cota; j++){
+        if(j % objetos[0] == 0){
+            tab[0][j] = true;
+        }else{
+            tab[0][j] = false;
+        }
+    }
+    for(int i = 1; i<= cantidad; i++){
+        for (int j = 1; j <= cota; j++){
+            if (j < objetos[i]){
+                tab[i][j] = tab[i-1][j];
+            } else if (j == objetos[i]){
+                tab[i][j] = true;
+            } else
+            {
+                tab[i][j] = tab[i-1][j] || tab[i][j-objetos[i]];
+            }
+        }
     }
 }
 
@@ -48,9 +68,7 @@ int main()
         pruebas[i] = prueba;
     }
 
-
-
-
+    bool 
 
     return 0;
 }

@@ -52,7 +52,7 @@ int mayor (int a, int b, int c){
 
 int maximaSumatoria(Pila* pilaUno, Pila* pilaDos, Pila* pilaTres, int sumaPilaUno, int sumaPilaDos, int sumaPilaTres){
     // Iterativo se tranca al momento de utilizar el ejecutable.
-    while (!(sumaPilaUno == sumaPilaDos == sumaPilaTres)){
+    while (!(sumaPilaUno == sumaPilaDos && sumaPilaDos == sumaPilaTres)){
         int mayorSumatoria = mayor(sumaPilaUno, sumaPilaDos, sumaPilaTres);
         if (mayorSumatoria == sumaPilaUno && !pilaUno->esVacia()){
             int elemento = pilaUno->top();
