@@ -6,17 +6,17 @@ using namespace std;
 
 bool ** initMatriz(int cantidad, int cota)
 {
-    int **m = new int* [cantidad + 1]();
+    bool **m = new bool* [cantidad]();
     for (int i = 0; i <= cantidad; i++){
-        m[i] = new int[cota+1]();
+        m[i] = new bool[cota+1]();
     }
     return m;
 };
 
-bool ** resolucion(int cantidad, int cota, int* objetos, int* pruebas)
+bool ** resolucion(int cantidad, int cota, int* objetos)
 {
     bool** tab = initMatriz(cantidad, cota);
-    for (int i = 0; i <= cantidad; i++){
+    for (int i = 0; i < cantidad; i++){
         tab[i][0] = false;
     }
     for(int j = 1; j <= cota; j++){
@@ -26,7 +26,7 @@ bool ** resolucion(int cantidad, int cota, int* objetos, int* pruebas)
             tab[0][j] = false;
         }
     }
-    for(int i = 1; i<= cantidad; i++){
+    for(int i = 1; i< cantidad; i++){
         for (int j = 1; j <= cota; j++){
             if (j < objetos[i]){
                 tab[i][j] = tab[i-1][j];
@@ -45,10 +45,9 @@ int main()
     // Cargo todos los objetos del conjunto
     int N;
     cin >> N;
-    int* objetos = new int [N + 1];
-    objetos[0] = 0;
+    int* objetos = new int [N];
     int elemento;
-    for (int i = 1; i < N + 1; i++){
+    for (int i = 0; i < N; i++){
         cin >> elemento;
         objetos[i] = elemento;
     }
@@ -60,15 +59,20 @@ int main()
     // Cargo las pruebas
     int P;
     cin >> P;
-    int* pruebas = new int [P + 1];
-    pruebas[0] = 0;
+    int* pruebas = new int [P];
     int prueba;
-    for (int i = 1; i < P + 1; i ++){
+    for (int i = 0; i < P; i ++){
         cin >> prueba;
         pruebas[i] = prueba;
     }
 
-    bool 
-
+    bool ** res = resolucion(N, cota, objetos);
+    for (int p = 0; p < P; p++){
+        if (res[N-1][pruebas[p]] == true){
+            cout << 1 << endl;
+        } else {
+            cout << 0 << endl;
+        }
+    }
     return 0;
 }
