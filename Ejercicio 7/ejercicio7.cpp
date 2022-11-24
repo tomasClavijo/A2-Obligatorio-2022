@@ -9,37 +9,50 @@ struct Nodo{
     Nodo * sig;
 };
 
-class Pila{
-    private:
-        Nodo* contenido;
-        int numeroDeElementos;
-    public:
-        Pila(){
-            numeroDeElementos = 0;
-            contenido = NULL;
-        }
-        void push(int elemento){
-            Nodo * nodo = new Nodo();
-            nodo->dato = elemento;
-            nodo->sig = contenido;
-            contenido = nodo;
-            numeroDeElementos++;
-        }
-        int top(){
-            return contenido->dato;
-        }
-        void pop(){
-            Nodo* aBorrar = new Nodo();
-            aBorrar = contenido;
-            contenido = contenido->sig;
-            delete aBorrar;
-            numeroDeElementos--;
-        }
-        bool esVacia(){
-            return numeroDeElementos == 0;
-        }
+struct PilaInt{
+     Nodo* contenido;
+     Nodo* fin;
+     int numeroDeElementos;
+     int suma;
 };
+       
+PilaInt* crearPila(){
+    PilaInt* pila = new PilaInt;
+    pila->numeroDeElementos = 0;
+    pila->contenido = NULL;
+    pila->fin = NULL;
+    pila->suma = 0;
+    return pila;
+}        
 
+bool esVacia(PilaInt* pila){
+    return pila->numeroDeElementos == 0;
+}
+void push(PilaInt*& pila, int elemento){
+    Nodo * nodo = new Nodo();
+    nodo->dato = elemento;
+    nodo->sig = NULL;
+    if (esVacia(pila)){
+        pila->contenido = nodo;
+        pila->fin = pila->contenido;
+    } else {
+        pila->fin->sig = nodo;
+        pila->fin = pila->fin->sig;
+    }
+    pila->numeroDeElementos++;
+    pila->suma += elemento;
+}
+int top(PilaInt* pila){
+    return pila->contenido->dato;
+}
+void pop(PilaInt*& pila){
+    Nodo* aBorrar = new Nodo();
+    aBorrar = pila->contenido;
+    pila->contenido = pila->contenido->sig;
+    delete aBorrar;
+    pila->numeroDeElementos--;
+}
+/*
 int mayor (int a, int b, int c){
     if (a >= b && a >= c){
         return a;
@@ -49,26 +62,70 @@ int mayor (int a, int b, int c){
         return c;
     }
 }
+*/
+int darSuma(PilaInt* p){
+    return p->suma;
+}
 
-int maximaSumatoria(Pila* pilaUno, Pila* pilaDos, Pila* pilaTres, int sumaPilaUno, int sumaPilaDos, int sumaPilaTres){
+int maximaSumatoria(PilaInt*& pila1, PilaInt*& pila2, PilaInt*& pila3){
+    int sumaPila1 = darSuma(pila1);
+    int sumaPila2 = darSuma(pila2);
+    int sumaPila3 = darSuma(pila3);
+
+    //Mientras que las pilas tengan algo
+    while(!esVacia(pila1) || !esVacia(pila2) || !esVacia(pila3)){
+
+        //Si alguna pila se queda sin elementos, no tienen una valor en común
+        if(esVacia(pila1) || esVacia(pila2) || esVacia(pila3)){
+            return 0;
+        }
+        if(sumaPila1 == sumaPila2 && sumaPila2 == sumaPila3){
+            return sumaPila1;
+        }
+
+        if(sumaPila1 >= sumaPila2 && sumaPila1 >= sumaPila3){
+            sumaPila1 -= top(pila1);
+            pop(pila1);
+        }else if(sumaPila2 >= sumaPila1 && sumaPila2 >= sumaPila3){
+            sumaPila2 -= top(pila2);
+            pop(pila2);
+        }else if(sumaPila3 >= sumaPila1 && sumaPila3 >= sumaPila2){
+            sumaPila3 -= top(pila3);
+            pop(pila3);
+        }
+    }
+    return 0;
+}
+
+
+
+/*
+int maximaSumatoria(PilaInt* pilaUno, PilaInt* pilaDos, PilaInt* pilaTres, int sumaPilaUno, int sumaPilaDos, int sumaPilaTres){
     // Iterativo se tranca al momento de utilizar el ejecutable.
-    while (!(sumaPilaUno == sumaPilaDos && sumaPilaDos == sumaPilaTres)){
+    while (!esVacia(pilaUno) || !esVacia(pilaDos) || !esVacia(pilaTres))
+    {
+        if (esVacia(pilaUno) || esVacia(pilaDos) || esVacia(pilaTres)){
+            return 0;
+        }
+        if (sumaPilaUno == sumaPilaDos && sumaPilaDos == sumaPilaTres){
+            return sumaPilaUno;
+        }
         int mayorSumatoria = mayor(sumaPilaUno, sumaPilaDos, sumaPilaTres);
-        if (mayorSumatoria == sumaPilaUno && !pilaUno->esVacia()){
-            int elemento = pilaUno->top();
-            pilaUno->pop();
+        if (mayorSumatoria == sumaPilaUno){
+            int elemento = top(pilaUno);
+            pop(pilaUno);
             sumaPilaUno = sumaPilaUno - elemento;
-        } else if (mayorSumatoria == sumaPilaDos && !pilaDos->esVacia()){
-            int elemento = pilaDos->top();
-            pilaDos->pop();
+        } else if (mayorSumatoria == sumaPilaDos){
+            int elemento = top(pilaDos);
+            pop(pilaDos);
             sumaPilaDos = sumaPilaDos - elemento;
-        } else if (mayorSumatoria == sumaPilaTres && !pilaTres->esVacia()){
-            int elemento = pilaTres->top();
-            pilaTres->pop();
+        } else if (mayorSumatoria == sumaPilaTres){
+            int elemento = top(pilaTres);
+            pop(pilaTres);
             sumaPilaTres = sumaPilaTres - elemento;
         }
     }
-    return sumaPilaUno;
+    */
 
     // Recursivo devuelve siempre 0
     /*
@@ -94,7 +151,6 @@ int maximaSumatoria(Pila* pilaUno, Pila* pilaDos, Pila* pilaTres, int sumaPilaUn
         }
     }
     */
-};
 
 int main(){
     int proxAInsertar;
@@ -102,58 +158,32 @@ int main(){
     // PILA 1
     int cantPilaUno;
     cin >> cantPilaUno;
-    int sumaPilaUno = 0;
-    // Inserto todos los numeros en un vector
-    int* arrUno = new int[cantPilaUno];
+
+    PilaInt* pilaUno = crearPila();
     for (int i = 0; i < cantPilaUno; i++){
         cin >> proxAInsertar;
-        sumaPilaUno += proxAInsertar;
-        arrUno[i] = proxAInsertar;
-    }
-    // Creo la Pila 1
-    Pila* pilaUno = new Pila();
-    // Inserto los elementos en la pila
-    for (int i = cantPilaUno - 1; i <= 0; i--){
-        pilaUno->push(arrUno[i]);
+        push(pilaUno, proxAInsertar);
     }
 
     // PILA 2
     int cantPilaDos;
     cin >> cantPilaDos;
-    int sumaPilaDos = 0;
-    // Inserto todos los numeros en un vector
-    int* arrDos = new int[cantPilaDos];
+    PilaInt* pilaDos = crearPila();
     for (int i = 0; i < cantPilaDos; i++){
         cin >> proxAInsertar;
-        sumaPilaDos += proxAInsertar;
-        arrDos[i] = proxAInsertar;
-    }
-    // Creo la Pila 2
-    Pila* pilaDos = new Pila();
-    // Inserto los elementos en la pila
-    for (int i = cantPilaDos - 1; i <= 0; i--){
-        pilaDos->push(arrDos[i]);
+        push(pilaDos, proxAInsertar);
     }
 
     // PILA 3
     int cantPilaTres;
     cin >> cantPilaTres;
-    int sumaPilaTres = 0;
-    // Inserto todos los numeros en un vector
-    int* arrTres = new int[cantPilaTres];
+    PilaInt* pilaTres = crearPila();
     for (int i = 0; i < cantPilaTres; i++){
         cin >> proxAInsertar;
-        sumaPilaTres += proxAInsertar;
-        arrTres[i] = proxAInsertar;
-    }
-    // Creo la Pila 3
-    Pila* pilaTres = new Pila();
-    // Inserto los elementos en la pila
-    for (int i = cantPilaTres - 1; i <= 0; i--){
-        pilaTres->push(arrTres[i]);
+        push(pilaTres, proxAInsertar);
     }
 
-    int resultado = maximaSumatoria(pilaUno, pilaDos, pilaTres, sumaPilaUno, sumaPilaDos, sumaPilaTres);
+    int resultado = maximaSumatoria(pilaUno, pilaDos, pilaTres);
     cout << resultado << endl;
 
 }
