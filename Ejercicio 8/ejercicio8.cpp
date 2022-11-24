@@ -72,5 +72,11 @@ int main()
             cout << 0 << endl;
         }
     }
+    delete objetos;
+    delete pruebas;
+    for (int i = 0; i < N; i++){
+        delete res[i];
+    }
+    delete res;
     return 0;
 }
