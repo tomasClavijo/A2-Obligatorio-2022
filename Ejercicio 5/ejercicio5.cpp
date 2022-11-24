@@ -150,4 +150,6 @@ int main (){
         cout << vertice << " " << gradoIncidencia << endl;
         delete n;
     }
+    delete [] arr;
+    delete heap;
 }
