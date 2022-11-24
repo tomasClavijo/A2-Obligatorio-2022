@@ -2,11 +2,11 @@
 #include <string>
 #include <iostream>
 #include <limits>
-#define INF 99999
+#define INF 888888
 using namespace std;
 
-void subconjuntoBacktracking(int* elementos, int cantElementos, int posActual, int prueba, int sumatoria, int solucionActual, int& solucionOptima){
-    if (posActual == cantElementos){
+void subconjuntoBacktracking(int* elementos, int cantidadElementos, int posActual, int prueba, int sumatoria, int solucionActual, int& solucionOptima){
+    if (posActual == cantidadElementos){
         if (sumatoria > prueba){
             return;
         } else if (sumatoria == prueba && solucionActual < solucionOptima){
@@ -14,24 +14,24 @@ void subconjuntoBacktracking(int* elementos, int cantElementos, int posActual, i
         }
     } else {
         if (elementos[posActual] <= prueba - sumatoria){
-            subconjuntoBacktracking(elementos, cantElementos, posActual, prueba, sumatoria+elementos[posActual], solucionActual+1, solucionOptima);
+            subconjuntoBacktracking(elementos, cantidadElementos, posActual, prueba, sumatoria+elementos[posActual], solucionActual+1, solucionOptima);
         } 
-        if(posActual + 1 == cantElementos){
+        if(posActual + 1 == cantidadElementos){
             if(sumatoria == prueba && solucionActual < solucionOptima){
                 solucionOptima = solucionActual;
             }
         } else {
-            subconjuntoBacktracking(elementos, cantElementos, posActual + 1, prueba, sumatoria, solucionActual, solucionOptima);
+            subconjuntoBacktracking(elementos, cantidadElementos, posActual + 1, prueba, sumatoria, solucionActual, solucionOptima);
         }
     }
 }
 
 int main(){
-    int cantElementos;
-    cin >> cantElementos;
-    int *elementos = new int [cantElementos];
-    for(int i = 0; i < cantElementos; i++){
-        int elemento;
+    int cantidadElementos;
+    cin >> cantidadElementos;
+    int *elementos = new int [cantidadElementos];
+    int elemento;
+    for(int i = 0; i < cantidadElementos; i++){
         cin >> elemento;
         elementos[i] = elemento;
     }
@@ -40,7 +40,6 @@ int main(){
     cin >> cantPruebas;
     int *pruebas = new int [cantPruebas];
     for(int i = 0; i < cantPruebas; i++){
-        int elemento;
         cin >> elemento;
         pruebas[i] = elemento;
     }
@@ -52,11 +51,14 @@ int main(){
 
     for(int i = 0; i < cantPruebas; i++){
         solucionOptima = INF;
-        subconjuntoBacktracking(elementos, cantElementos, posActual, pruebas[i], sumatoria, solucionActual, solucionOptima);
+        subconjuntoBacktracking(elementos, cantidadElementos, posActual, pruebas[i], sumatoria, solucionActual, solucionOptima);
         if (solucionOptima == INF){
             cout << "0" << endl;
         } else {
             cout << solucionOptima << endl;
         }
     }
+
+    delete [] elementos;
+    delete [] pruebas;
 }
