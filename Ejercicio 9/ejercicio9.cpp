@@ -13,6 +13,9 @@ void subconjuntoBacktracking(int* elementos, int cantidadElementos, int posActua
             solucionOptima = solucionActual;
         }
     } else {
+        if (solucionOptima < solucionActual){
+            return;
+        }
         if (elementos[posActual] <= prueba - sumatoria){
             subconjuntoBacktracking(elementos, cantidadElementos, posActual, prueba, sumatoria+elementos[posActual], solucionActual+1, solucionOptima);
         } 
