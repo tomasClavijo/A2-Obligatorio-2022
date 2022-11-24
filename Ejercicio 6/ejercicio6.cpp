@@ -49,6 +49,6 @@ int main(){
     }
     int noRepetido = elementoNoRepetido(arr, 0, cantidadElementos - 1);
     cout << noRepetido << endl;
-    delete arr;
+    delete [] arr;
     return 0;
 }
