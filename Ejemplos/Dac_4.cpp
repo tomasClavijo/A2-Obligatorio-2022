@@ -27,6 +27,6 @@ int main(){
         arr[i] = aux;
     }
 
-    cout << esCreciente(arr, 0, N-1) ? "True" : "False" << endl;
+    cout << (esCreciente(arr, 0, N-1) ? "True" : "False") << endl;
     return 0;
 }

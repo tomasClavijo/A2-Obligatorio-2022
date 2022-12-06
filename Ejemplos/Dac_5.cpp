@@ -26,7 +26,14 @@ int cambio(int monedaHasta, int cambioRestante, int* valoresMonedas){
     // Si la podemos usar vemos que nos conviene
 
     // La cantidad de monedas que tengo que usar SI usara la moneda actual
-    int cantidadUsandoLaMoneda = 1 + cambio(monedaHasta, cambioRestante - valorDeLaMoneda, valoresMonedas);
+    int aux = + cambio(monedaHasta, cambioRestante - valorDeLaMoneda, valoresMonedas);
+    int cantidadUsandoLaMoneda;
+    // No podria dar el resto si doy esa moneda
+    if (aux == INT_MAX){
+        cantidadUsandoLaMoneda = INT_MAX;
+    } else {
+        cantidadUsandoLaMoneda = 1 + aux;
+    }
     // La cantidad de monedas que tengo que usar si NO usara la moneda actual.
     int cantidadNOUsandoLaMoneda = cambio(monedaHasta - 1, cambioRestante, valoresMonedas);
 
@@ -58,7 +65,6 @@ int main(){
         } else {
             cout << cantidadDeMonedas << endl;
         }
-        cout << cambio(M - 1, vueltoADar, valoresMonedas) << endl;
     }
 
 }
