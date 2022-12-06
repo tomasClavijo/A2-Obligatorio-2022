@@ -9,7 +9,7 @@ int capacidad = 13;
 // el primer valor de los array no se usa (es el no objeto)
 int pesos[5] = {0, 5, 3, 8 , 4};
 int valores[5] = {0, 10, 20, 25, 8};
-string nombres[5] = {"", "Lingote", "Diamante", "Rubi", "Moneda"}
+string nombres[5] = {"", "Lingote", "Diamante", "Rubi", "Moneda"};
 
 int max(int a, int b){
     return a > b ? a : b;
